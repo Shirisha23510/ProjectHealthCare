@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.demo.dao.HealthDao;
+import com.cg.demo.dao.LoginDao;
 import com.cg.demo.entity.Heatlh;
+import com.cg.demo.entity.Login;
 import com.cg.demo.exception.HealthException;
 
 @Service
@@ -15,6 +17,9 @@ public class HealthServiceImpl implements HealthService{
 	
 	 @Autowired
 	   HealthDao  healthDao;
+	 
+	 @Autowired
+	   LoginDao loginDao;
 	@Override
 	public List<Heatlh> findAllCenters() {
        List<Heatlh> list = healthDao.findAll();
@@ -70,6 +75,12 @@ public class HealthServiceImpl implements HealthService{
 			throw new HealthException("Id not found");
 		}
 		return health ;
+	}
+
+	@Override
+	public Login findUser(String username, String password) throws HealthException {
+
+		return loginDao.findUser(username,password);
 	}
 
 	

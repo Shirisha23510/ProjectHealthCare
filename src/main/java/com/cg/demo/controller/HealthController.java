@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.demo.entity.Heatlh;
+import com.cg.demo.entity.Login;
+import com.cg.demo.exception.HealthException;
 import com.cg.demo.service.HealthService;
 
 
@@ -24,6 +26,21 @@ import com.cg.demo.service.HealthService;
 public class HealthController {
 	@Autowired
 	HealthService  healthService;
+	
+	@GetMapping("admin/login/{user}/{pass}")
+	public ResponseEntity<Login>  findUserLogin(@PathVariable("user") String username, @PathVariable("pass") String password) throws HealthException
+	{
+	  
+		 Login log = healthService.findUser(username,password);
+		 if(log==null) {
+			 throw new HealthException("Login not successful");
+		 }
+		 return new ResponseEntity<>(log,HttpStatus.OK);
+		
+		
+	}
+	
+	
 	
 	
 	@GetMapping("center")
